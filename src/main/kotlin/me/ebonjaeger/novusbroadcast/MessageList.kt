@@ -12,6 +12,8 @@ data class MessageList(private val plugin: NovusBroadcast,
                        private val name: String,
                        private val interval: Long,
                        private val randomize: Boolean,
+                       private val header: String,
+                       private val footer: String,
                        private val messages: List<String>)
 {
 
@@ -45,7 +47,12 @@ data class MessageList(private val plugin: NovusBroadcast,
     {
         for (player in Bukkit.getServer().onlinePlayers)
         {
-            player.sendMessage(messages[index])
+            val sb = StringBuilder()
+            sb.append(header)
+            sb.append(messages[index])
+            sb.append(footer)
+
+            player.sendMessage(sb.toString())
         }
     }
 }

@@ -3,8 +3,10 @@
     "default": {
       "interval": 300,
       "randomize": false,
+      "header": "\n &c&m ----------------&r &9&lNovus Broadcast&r &c&m---------------\n ",
+      "footer": "\n &c&m ----------------------------------------------------&r\n ",
       "messages": [
-        "You are using NovusBroadcast! Please configure your messages! :)"
+        "&7You are using NovusBroadcast! Please configure your messages! &e:)"
       ]
     }
   }
