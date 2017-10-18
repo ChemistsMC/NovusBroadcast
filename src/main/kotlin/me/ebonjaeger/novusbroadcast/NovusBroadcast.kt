@@ -5,6 +5,7 @@ import com.google.gson.stream.JsonReader
 import me.ebonjaeger.novusbroadcast.commands.ExecutableCommand
 import me.ebonjaeger.novusbroadcast.commands.NovusCommand
 import me.ebonjaeger.novusbroadcast.commands.ReloadCommand
+import me.ebonjaeger.novusbroadcast.commands.VersionCommand
 import me.ebonjaeger.novusbroadcast.permissions.PermissionManager
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
@@ -94,6 +95,7 @@ class NovusBroadcast : JavaPlugin()
     {
         commands.put("nb", NovusCommand())
         commands.put("reload", ReloadCommand(this))
+        commands.put("version", VersionCommand(this))
     }
 
     fun reload()
