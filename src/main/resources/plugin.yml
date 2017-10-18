@@ -1,0 +1,9 @@
+main: me.ebonjaeger.novusbroadcast.NovusBroadcast
+version: maven-version
+name: NovusBroadcast
+author: EbonJaeger
+
+commands:
+  nb:
+    description: Commands for NovusBroadcast
+    aliases: [novusbroadcast]
