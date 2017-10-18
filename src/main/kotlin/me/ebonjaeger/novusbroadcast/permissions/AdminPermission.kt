@@ -6,6 +6,8 @@ enum class AdminPermission (private val node: String,
 
     HELP("novusbroadcast.help", DefaultPermission.OP_ONLY),
 
+    INFO("novusbroadcast.info", DefaultPermission.OP_ONLY),
+
     RELOAD("novusbroadcast.reload", DefaultPermission.OP_ONLY),
 
     VERSION("novusbroadcast.version", DefaultPermission.OP_ONLY);

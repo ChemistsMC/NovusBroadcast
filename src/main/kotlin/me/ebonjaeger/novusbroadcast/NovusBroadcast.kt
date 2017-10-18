@@ -2,10 +2,7 @@ package me.ebonjaeger.novusbroadcast
 
 import com.google.gson.JsonParser
 import com.google.gson.stream.JsonReader
-import me.ebonjaeger.novusbroadcast.commands.ExecutableCommand
-import me.ebonjaeger.novusbroadcast.commands.NovusCommand
-import me.ebonjaeger.novusbroadcast.commands.ReloadCommand
-import me.ebonjaeger.novusbroadcast.commands.VersionCommand
+import me.ebonjaeger.novusbroadcast.commands.*
 import me.ebonjaeger.novusbroadcast.listeners.PluginListener
 import me.ebonjaeger.novusbroadcast.permissions.PermissionManager
 import org.bukkit.Bukkit
@@ -19,9 +16,10 @@ import java.io.FileReader
 class NovusBroadcast : JavaPlugin()
 {
 
+    val messageLists = HashMap<String, MessageList>()
+
     private val commands = HashMap<String, ExecutableCommand>()
     private val messagesFile = File(dataFolder, "messages.json")
-    private val messageLists = HashSet<MessageList>()
     private val permissionManager = PermissionManager(Bukkit.getPluginManager())
 
     override fun onEnable()
@@ -77,11 +75,8 @@ class NovusBroadcast : JavaPlugin()
                     return true
                 }
 
-                // Add all args excluding the first one
-                val argsList = mutableListOf(args).removeAt(0)?.toList()
-
                 // Execute the command
-                mappedCommand.executeCommand(sender, argsList)
+                mappedCommand.executeCommand(sender, args?.asList())
                 return true
             }
             else
@@ -97,6 +92,7 @@ class NovusBroadcast : JavaPlugin()
     private fun registerCommands()
     {
         commands.put("nb", NovusCommand())
+        commands.put("info", InfoCommand(this))
         commands.put("reload", ReloadCommand(this))
         commands.put("version", VersionCommand(this))
     }
@@ -140,7 +136,7 @@ class NovusBroadcast : JavaPlugin()
                         messages.add(ChatColor.translateAlternateColorCodes('&', message.asString))
                     }
 
-                    messageLists.add(MessageList(this, name, interval, randomize, prefix, suffix, messages))
+                    messageLists.put(name, MessageList(this, name, interval, randomize, prefix, suffix, messages))
                 }
             }
         })

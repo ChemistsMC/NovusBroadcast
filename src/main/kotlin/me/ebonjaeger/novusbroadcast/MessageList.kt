@@ -19,12 +19,12 @@ import java.util.*
  * @param messages The list of messages to broadcast.
  */
 data class MessageList(private val plugin: NovusBroadcast,
-                       private val name: String,
-                       private val interval: Long,
-                       private val randomize: Boolean,
-                       private val prefix: String,
-                       private val suffix: String,
-                       private val messages: List<String>)
+                       val name: String,
+                       val interval: Long,
+                       val randomize: Boolean,
+                       val prefix: String,
+                       val suffix: String,
+                       val messages: List<String>)
 {
 
     private var currentIndex = 0
