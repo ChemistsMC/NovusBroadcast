@@ -19,5 +19,8 @@ interface ExecutableCommand
      *
      * @return The required permission node, or null
      */
-    fun getRequiredPermission(): PermissionNode
+    fun getRequiredPermission(): PermissionNode?
+    {
+        return null
+    }
 }

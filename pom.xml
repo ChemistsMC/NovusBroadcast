@@ -76,6 +76,21 @@
         <sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>
         <!-- testSourceDirectory>${project.basedir}/src/test/kotlin</testSourceDirectory -->
 
+        <defaultGoal>clean install</defaultGoal>
+        <resources>
+            <resource>
+                <directory>.</directory>
+                <filtering>false</filtering>
+                <includes>
+                    <include>LICENSE</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources/</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+
         <plugins>
             <plugin>
                 <artifactId>kotlin-maven-plugin</artifactId>

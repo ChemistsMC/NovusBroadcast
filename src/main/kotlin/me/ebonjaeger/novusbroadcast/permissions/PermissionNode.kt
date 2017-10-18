@@ -5,11 +5,11 @@ interface PermissionNode
 
     /**
      * Return the node of the permission.
-     * For example, 'perworldinventory.reload'.
+     * For example, 'novusbroadcast.reload'.
      *
      * @return The name of the permission node.
      */
-    fun getNode():String
+    fun getNode(): String
 
     /**
      * Return the default permission for this node if no permission server is
@@ -17,5 +17,5 @@ interface PermissionNode
      *
      * @return The default level of permission.
      */
-    fun getDefaultPermission():DefaultPermission
+    fun getDefaultPermission(): DefaultPermission
 }

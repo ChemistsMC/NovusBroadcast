@@ -15,19 +15,19 @@ enum class DefaultPermission
 
     OP_ONLY
     {
-        override fun evaluate(sender: CommandSender?): Boolean?
+        override fun evaluate(sender: CommandSender?): Boolean
         {
-            return sender?.isOp
+            return sender!!.isOp
         }
     },
 
     ALLOWED
     {
-        override fun evaluate(sender: CommandSender?): Boolean?
+        override fun evaluate(sender: CommandSender?): Boolean
         {
             return true
         }
     };
 
-    abstract fun evaluate(sender:CommandSender?):Boolean?
+    abstract fun evaluate(sender:CommandSender?): Boolean
 }
