@@ -6,6 +6,7 @@ import me.ebonjaeger.novusbroadcast.commands.ExecutableCommand
 import me.ebonjaeger.novusbroadcast.commands.NovusCommand
 import me.ebonjaeger.novusbroadcast.commands.ReloadCommand
 import me.ebonjaeger.novusbroadcast.commands.VersionCommand
+import me.ebonjaeger.novusbroadcast.listeners.PluginListener
 import me.ebonjaeger.novusbroadcast.permissions.PermissionManager
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
@@ -44,7 +45,9 @@ class NovusBroadcast : JavaPlugin()
             saveResource("messages.json", false)
         }
 
+        permissionManager.checkForPlugins()
         registerCommands()
+        registerListeners()
         loadMessageLists(messagesFile)
 
         ConsoleLogger.debug("NovusBroadcast is enabled and debug-mode is active!")
@@ -98,9 +101,16 @@ class NovusBroadcast : JavaPlugin()
         commands.put("version", VersionCommand(this))
     }
 
+    private fun registerListeners()
+    {
+        server.pluginManager.registerEvents(PluginListener(permissionManager), this)
+    }
+
     fun reload()
     {
         reloadConfig()
+
+        Bukkit.getScheduler().cancelTasks(this)
         messageLists.clear()
 
         ConsoleLogger.setUseDebug(config.getBoolean(ConfigStrings.DEBUG_MODE, false))

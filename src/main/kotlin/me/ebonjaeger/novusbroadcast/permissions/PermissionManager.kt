@@ -51,6 +51,8 @@ class PermissionManager(private val pluginManager: PluginManager)
 
     fun isPermissionSystem(name: String): Boolean
     {
+        ConsoleLogger.debug("[PERMS] Checking plugin '$name'...")
+
         for (type in PermissionSystem.values())
         {
             if (type.pluginName == name)
@@ -62,8 +64,10 @@ class PermissionManager(private val pluginManager: PluginManager)
         return false
     }
 
-    private fun checkForPlugins()
+    fun checkForPlugins()
     {
+        ConsoleLogger.debug("[PERMS] Checking for permissions plugins")
+
         usingPermissionsPlugin = false
 
         for (type in PermissionSystem.values())
@@ -78,6 +82,7 @@ class PermissionManager(private val pluginManager: PluginManager)
                 }
 
                 usingPermissionsPlugin = true
+                ConsoleLogger.debug("[PERMS] usingPermissionsPlugin is set to true")
             } catch (ex: Exception)
             {
                 ConsoleLogger.warning("Error encountered while checking for permission plugin:", ex)

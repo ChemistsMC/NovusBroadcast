@@ -36,7 +36,7 @@ data class MessageList(private val plugin: NovusBroadcast,
             if (randomize)
             {
                 val random = Random()
-                val index = random.nextInt(messages.size + 1)
+                val index = random.nextInt(messages.size)
 
                 sendMessage(index)
             }
@@ -45,7 +45,7 @@ data class MessageList(private val plugin: NovusBroadcast,
                 sendMessage(currentIndex)
                 currentIndex++
 
-                if (currentIndex > messages.size)
+                if (currentIndex == messages.size)
                 {
                     currentIndex = 0
                 }
