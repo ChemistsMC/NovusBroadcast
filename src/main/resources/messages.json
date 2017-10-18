@@ -6,7 +6,7 @@
       "prefix": "\n &c&m ----------------&r &9&lNovus Broadcast&r &c&m---------------\n ",
       "suffix": "\n &c&m ----------------------------------------------------&r\n ",
       "messages": [
-        "&7You are using NovusBroadcast! Please configure your messages! &e:)"
+        "&7You are using &9NovusBroadcast&7! Please configure your messages! &e:)"
       ]
     }
   }
