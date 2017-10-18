@@ -70,6 +70,11 @@ data class MessageList(private val plugin: NovusBroadcast,
         sb.append(suffix)
         val final = sb.toString()
 
+        if (plugin.config.getBoolean(ConfigStrings.SEND_TO_CONSOLE, false))
+        {
+            Bukkit.getConsoleSender().sendMessage(final)
+        }
+
         for (player in Bukkit.getServer().onlinePlayers)
         {
             player.sendMessage(final)

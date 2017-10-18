@@ -4,6 +4,7 @@ import com.google.gson.JsonParser
 import com.google.gson.stream.JsonReader
 import me.ebonjaeger.novusbroadcast.commands.ExecutableCommand
 import me.ebonjaeger.novusbroadcast.commands.NovusCommand
+import me.ebonjaeger.novusbroadcast.commands.ReloadCommand
 import me.ebonjaeger.novusbroadcast.permissions.PermissionManager
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
@@ -17,6 +18,7 @@ class NovusBroadcast : JavaPlugin()
 {
 
     private val commands = HashMap<String, ExecutableCommand>()
+    private val messagesFile = File(dataFolder, "messages.json")
     private val messageLists = HashSet<MessageList>()
     private val permissionManager = PermissionManager(Bukkit.getPluginManager())
 
@@ -24,14 +26,27 @@ class NovusBroadcast : JavaPlugin()
     {
         ConsoleLogger.setLogger(logger)
 
-        val file = File(dataFolder, "messages.json")
-        if (!file.exists())
+        val config = config
+        config.options().header("Configuration file for NovusBroadcast. \n"
+                + "Configure the messages to broadcast in the 'messages.json' file.")
+
+        config.addDefault(ConfigStrings.DEBUG_MODE, false)
+        config.addDefault(ConfigStrings.SEND_TO_CONSOLE, false)
+
+        config.options().copyDefaults(true)
+        saveConfig()
+
+        ConsoleLogger.setUseDebug(config.getBoolean(ConfigStrings.DEBUG_MODE, false))
+
+        if (!messagesFile.exists())
         {
             saveResource("messages.json", false)
         }
 
         registerCommands()
-        loadMessageLists(file)
+        loadMessageLists(messagesFile)
+
+        ConsoleLogger.debug("NovusBroadcast is enabled and debug-mode is active!")
     }
 
     override fun onDisable()
@@ -78,6 +93,16 @@ class NovusBroadcast : JavaPlugin()
     private fun registerCommands()
     {
         commands.put("nb", NovusCommand())
+        commands.put("reload", ReloadCommand(this))
+    }
+
+    fun reload()
+    {
+        reloadConfig()
+        messageLists.clear()
+
+        ConsoleLogger.setUseDebug(config.getBoolean(ConfigStrings.DEBUG_MODE, false))
+        loadMessageLists(messagesFile)
     }
 
     fun loadMessageLists(file: File)

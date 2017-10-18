@@ -7,9 +7,9 @@ class NovusCommand : ExecutableCommand
 {
     override fun executeCommand(sender: CommandSender?, args: List<String>?)
     {
-        sender?.sendMessage(ChatColor.BLUE.toString() + "» " + ChatColor.GRAY + "Use the command " + ChatColor.WHITE + "/nb help"
+        sender?.sendMessage("" + ChatColor.BLUE + "» " + ChatColor.GRAY + "Use the command " + ChatColor.WHITE + "/nb help"
                 + ChatColor.GRAY + " for help.")
-        sender?.sendMessage(ChatColor.BLUE.toString() + "» " + ChatColor.GRAY + "Use the command " + ChatColor.WHITE + "/nb version"
+        sender?.sendMessage("" + ChatColor.BLUE + "» " + ChatColor.GRAY + "Use the command " + ChatColor.WHITE + "/nb version"
                 + ChatColor.GRAY + " for version info.")
     }
 }
