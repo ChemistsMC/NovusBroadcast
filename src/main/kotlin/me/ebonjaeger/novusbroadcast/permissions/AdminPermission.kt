@@ -10,6 +10,8 @@ enum class AdminPermission (private val node: String,
 
     RELOAD("novusbroadcast.reload", DefaultPermission.OP_ONLY),
 
+    SEND("novusbroadcast.send", DefaultPermission.OP_ONLY),
+
     VERSION("novusbroadcast.version", DefaultPermission.OP_ONLY);
 
     override fun getNode(): String

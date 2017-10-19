@@ -21,7 +21,7 @@ class InfoCommand(private val plugin: NovusBroadcast) : ExecutableCommand
         val messageList = plugin.messageLists[args[1]]
         if (messageList == null)
         {
-            sender?.sendMessage("" + ChatColor.RED + "» " + ChatColor.GRAY + "No list with  that name found!")
+            sender?.sendMessage("" + ChatColor.RED + "» " + ChatColor.GRAY + "No list with name '${args[1]}' found!")
             return
         }
 
