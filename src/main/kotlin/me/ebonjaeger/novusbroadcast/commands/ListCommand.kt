@@ -1,20 +1,23 @@
 package me.ebonjaeger.novusbroadcast.commands
 
+import me.ebonjaeger.novusbroadcast.MessageList
 import me.ebonjaeger.novusbroadcast.NovusBroadcast
 import me.ebonjaeger.novusbroadcast.permissions.AdminPermission
 import me.ebonjaeger.novusbroadcast.permissions.PermissionNode
 import org.bukkit.ChatColor
 import org.bukkit.command.CommandSender
 
-class SendCommand(private val plugin: NovusBroadcast) : ExecutableCommand
+class ListCommand(private val plugin: NovusBroadcast) : ExecutableCommand
 {
+
+    private val PAGE_SIZE = 5
 
     override fun executeCommand(sender: CommandSender?, args: List<String>)
     {
-        if (args.size != 3)
+        if (args.size < 2 || args.size > 3)
         {
             sender?.sendMessage("" + ChatColor.RED + "» " + ChatColor.GRAY + "Invalid arguments! Usage is: "
-                    + ChatColor.WHITE + "/nb info <messageList>")
+                    + ChatColor.WHITE + "/nb list <messageList> [page]")
             return
         }
 
@@ -25,26 +28,27 @@ class SendCommand(private val plugin: NovusBroadcast) : ExecutableCommand
             return
         }
 
-        val index = args[2].toIntOrNull()
-        if (index == null)
-        {
-            sender?.sendMessage("" + ChatColor.RED + "» " + ChatColor.GRAY + "Invalid index argument '${args[2]}'!")
-            return
-        }
+        val pages = (messageList.messages.size + PAGE_SIZE - 1) / PAGE_SIZE
 
-        try
+        val page: Int
+        if (args.size == 3)
         {
-            val message = messageList.messages[index]
-            messageList.sendMessage(index)
+            page = args[2].toIntOrNull()
+            if (page == null)
+            {
+                sender?.sendMessage("" + ChatColor.RED + "» " + ChatColor.GRAY + "Invalid page '${args[2]}'!")
+                return
+            }
         }
-        catch (ex: IndexOutOfBoundsException)
-        {
-            sender?.sendMessage("" + ChatColor.RED + "» " + ChatColor.GRAY + "No message at index '$index'!")
-        }
+    }
+
+    private fun buildPage(messageList: MessageList, page: Int, totalPages: Int)
+    {
+
     }
 
     override fun getRequiredPermission(): PermissionNode?
     {
-        return AdminPermission.SEND
+        return AdminPermission.LIST
     }
 }

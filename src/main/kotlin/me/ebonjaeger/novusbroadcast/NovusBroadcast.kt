@@ -76,7 +76,7 @@ class NovusBroadcast : JavaPlugin()
                 }
 
                 // Execute the command
-                mappedCommand.executeCommand(sender, args?.asList())
+                mappedCommand.executeCommand(sender, args?.asList() ?: emptyList())
                 return true
             }
             else
@@ -131,11 +131,7 @@ class NovusBroadcast : JavaPlugin()
                     val array = jsonObject["messages"].asJsonArray
                     val prefix = ChatColor.translateAlternateColorCodes('&', jsonObject["prefix"].asString)
                     val suffix = ChatColor.translateAlternateColorCodes('&', jsonObject["suffix"].asString)
-                    val messages = mutableListOf<String>()
-                    for (message in array)
-                    {
-                        messages.add(ChatColor.translateAlternateColorCodes('&', message.asString))
-                    }
+                    val messages = array.map { ChatColor.translateAlternateColorCodes('&', it.asString) }
 
                     messageLists.put(name, MessageList(this, name, interval, randomize, prefix, suffix, messages))
                 }

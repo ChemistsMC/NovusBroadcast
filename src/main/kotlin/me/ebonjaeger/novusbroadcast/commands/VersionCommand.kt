@@ -9,7 +9,7 @@ import org.bukkit.command.CommandSender
 class VersionCommand(private val plugin: NovusBroadcast) : ExecutableCommand
 {
 
-    override fun executeCommand(sender: CommandSender?, args: List<String>?)
+    override fun executeCommand(sender: CommandSender?, args: List<String>)
     {
         val version = plugin.description.version
         val authors = plugin.description.authors.toString()

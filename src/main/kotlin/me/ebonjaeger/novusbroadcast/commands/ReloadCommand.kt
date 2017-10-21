@@ -9,7 +9,7 @@ import org.bukkit.command.CommandSender
 class ReloadCommand(private val plugin: NovusBroadcast): ExecutableCommand
 {
 
-    override fun executeCommand(sender: CommandSender?, args: List<String>?)
+    override fun executeCommand(sender: CommandSender?, args: List<String>)
     {
         plugin.reload()
 

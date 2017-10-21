@@ -9,9 +9,9 @@ import org.bukkit.command.CommandSender
 class InfoCommand(private val plugin: NovusBroadcast) : ExecutableCommand
 {
 
-    override fun executeCommand(sender: CommandSender?, args: List<String>?)
+    override fun executeCommand(sender: CommandSender?, args: List<String>)
     {
-        if (args?.size != 2)
+        if (args.size != 2)
         {
             sender?.sendMessage("" + ChatColor.RED + "» " + ChatColor.GRAY + "Invalid arguments! Usage is: "
                     + ChatColor.WHITE + "/nb info <messageList>")

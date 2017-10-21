@@ -8,6 +8,8 @@ enum class AdminPermission (private val node: String,
 
     INFO("novusbroadcast.info", DefaultPermission.OP_ONLY),
 
+    LIST("novusbroadcast.list", DefaultPermission.OP_ONLY),
+
     RELOAD("novusbroadcast.reload", DefaultPermission.OP_ONLY),
 
     SEND("novusbroadcast.send", DefaultPermission.OP_ONLY),

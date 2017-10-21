@@ -12,7 +12,7 @@ interface ExecutableCommand
      * @param sender The person performing the command.
      * @param args The arguments given by the sender.
      */
-    fun executeCommand(sender: CommandSender?, args:List<String>?)
+    fun executeCommand(sender: CommandSender?, args:List<String>)
 
     /**
      * Returns the permission required to execute this command, or null if it is not restricted.
