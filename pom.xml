@@ -6,7 +6,7 @@
 
     <groupId>me.ebonjaeger</groupId>
     <artifactId>novusbroadcast</artifactId>
-    <version>1.0.0-beta.1</version>
+    <version>1.0.0</version>
 
     <name>NovusBroadcast</name>
     <description>Configure messages to broadcast on the server.</description>

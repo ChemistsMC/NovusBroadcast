@@ -5,7 +5,7 @@ import org.bukkit.command.CommandSender
 
 class NovusCommand : ExecutableCommand
 {
-    override fun executeCommand(sender: CommandSender?, args: List<String>?)
+    override fun executeCommand(sender: CommandSender?, args: List<String>)
     {
         sender?.sendMessage("" + ChatColor.BLUE + "» " + ChatColor.GRAY + "Use the command " + ChatColor.WHITE + "/nb help"
                 + ChatColor.GRAY + " for help.")

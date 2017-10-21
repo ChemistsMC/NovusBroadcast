@@ -3,8 +3,8 @@
     "default": {
       "interval": 300,
       "randomize": false,
-      "prefix": "\n &7&m ---------------&r &9&lNovus Broadcast&r &7&m---------------&r\n ",
-      "suffix": "\n &7&m ----------------------------------------------------&r\n ",
+      "prefix": "\n &7&m ---------------&r &9&lNovus Broadcast&r &7&m--------------- &r\n",
+      "suffix": "\n &7&m ---------------------------------------------------- &r\n",
       "messages": [
         "&7You are using &9NovusBroadcast&7! Please configure your messages! &e:)"
       ]

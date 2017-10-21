@@ -30,21 +30,56 @@ class ListCommand(private val plugin: NovusBroadcast) : ExecutableCommand
 
         val pages = (messageList.messages.size + PAGE_SIZE - 1) / PAGE_SIZE
 
-        val page: Int
-        if (args.size == 3)
+        val page = getPage(args)
+        if (page == null)
         {
-            page = args[2].toIntOrNull()
-            if (page == null)
-            {
-                sender?.sendMessage("" + ChatColor.RED + "» " + ChatColor.GRAY + "Invalid page '${args[2]}'!")
-                return
-            }
+            sender?.sendMessage("" + ChatColor.RED + "» " + ChatColor.GRAY + "'${args[2]}' is not a number!")
+            return
+        }
+
+        if (page < 1 || page > pages)
+        {
+            sender?.sendMessage("" + ChatColor.RED + "» " + ChatColor.GRAY + "Page '$page' does not exist!")
+            return
+        }
+
+        val list = buildList(messageList, page, pages)
+        sender?.sendMessage(list)
+    }
+
+    private fun getPage(args: List<String>): Int?
+    {
+        return if (args.size == 3)
+        {
+            args[2].toIntOrNull()
+        }
+        else
+        {
+            1
         }
     }
 
-    private fun buildPage(messageList: MessageList, page: Int, totalPages: Int)
+    private fun buildList(messageList: MessageList, page: Int, totalPages: Int): String
     {
+        val startIndex = (page - 1) * PAGE_SIZE
+        var endIndex = startIndex + PAGE_SIZE
+        if (endIndex >= messageList.messages.size)
+        {
+            endIndex = messageList.messages.size - 1
+        }
 
+        val sb = StringBuilder()
+        sb.append("" + ChatColor.GRAY + ChatColor.STRIKETHROUGH + " ---------------" + ChatColor.BLUE + " Page "
+                + ChatColor.WHITE + "$page/$totalPages " + ChatColor.GRAY + ChatColor.STRIKETHROUGH + "--------------- \n")
+
+        for (i in startIndex..endIndex)
+        {
+            sb.append("" + ChatColor.WHITE + "$i" + ChatColor.GRAY + ": " + ChatColor.WHITE + "${messageList.messages[i]}\n")
+        }
+
+        sb.append("" + ChatColor.GRAY + ChatColor.STRIKETHROUGH + " ---------------------------------------------------- \n")
+
+        return sb.toString()
     }
 
     override fun getRequiredPermission(): PermissionNode?
