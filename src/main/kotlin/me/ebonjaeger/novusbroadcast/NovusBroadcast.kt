@@ -92,6 +92,7 @@ class NovusBroadcast : JavaPlugin()
     private fun registerCommands()
     {
         commands.put("nb", NovusCommand())
+        commands.put("help", HelpCommand())
         commands.put("info", InfoCommand(this))
         commands.put("list", ListCommand(this))
         commands.put("reload", ReloadCommand(this))
