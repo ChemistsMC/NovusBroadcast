@@ -56,28 +56,22 @@ data class MessageList(private val plugin: NovusBroadcast,
     /**
      * Sends a message to all online players.
      *
-     * This function builds the final message from the prefix,
-     * suffix and the message itself. It then sends that final message
-     * to the players.
-     *
      * @param index The index in the list of the message to send.
      */
     fun sendMessage(index: Int)
     {
-        val sb = StringBuilder()
-        sb.append(prefix)
-        sb.append(messages[index])
-        sb.append(suffix)
-        val final = sb.toString()
-
         if (plugin.config.getBoolean(ConfigStrings.SEND_TO_CONSOLE, false))
         {
-            Bukkit.getConsoleSender().sendMessage(final)
+            Bukkit.getConsoleSender().sendMessage(prefix)
+            Bukkit.getConsoleSender().sendMessage(messages[index])
+            Bukkit.getConsoleSender().sendMessage(suffix)
         }
 
         for (player in Bukkit.getServer().onlinePlayers)
         {
-            player.sendMessage(final)
+            player.sendMessage(prefix)
+            player.sendMessage(messages[index])
+            player.sendMessage(suffix)
         }
     }
 }
