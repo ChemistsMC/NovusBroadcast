@@ -2,6 +2,7 @@ main: me.ebonjaeger.novusbroadcast.NovusBroadcast
 version: maven-version
 name: NovusBroadcast
 author: EbonJaeger
+api-version: 1.13
 
 commands:
   nb:

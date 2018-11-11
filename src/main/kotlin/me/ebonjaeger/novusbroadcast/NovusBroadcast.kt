@@ -116,9 +116,9 @@ class NovusBroadcast : JavaPlugin()
         loadMessageLists(messagesFile)
     }
 
-    fun loadMessageLists(file: File)
+    private fun loadMessageLists(file: File)
     {
-        Bukkit.getScheduler().runTaskAsynchronously(this, {
+        Bukkit.getScheduler().runTaskAsynchronously(this) {
             JsonReader(FileReader(file)).use {
                 val parser = JsonParser()
                 val data = parser.parse(it).asJsonObject
@@ -138,6 +138,6 @@ class NovusBroadcast : JavaPlugin()
                     messageLists.put(name, MessageList(this, name, interval, randomize, prefix, suffix, messages))
                 }
             }
-        })
+        }
     }
 }
