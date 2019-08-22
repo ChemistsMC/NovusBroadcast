@@ -91,13 +91,13 @@ class NovusBroadcast : JavaPlugin()
 
     private fun registerCommands()
     {
-        commands.put("nb", NovusCommand())
-        commands.put("help", HelpCommand())
-        commands.put("info", InfoCommand(this))
-        commands.put("list", ListCommand(this))
-        commands.put("reload", ReloadCommand(this))
-        commands.put("send", SendCommand(this))
-        commands.put("version", VersionCommand(this))
+        commands["nb"] = NovusCommand()
+        commands["help"] = HelpCommand()
+        commands["info"] = InfoCommand(this)
+        commands["list"] = ListCommand(this)
+        commands["reload"] = ReloadCommand(this)
+        commands["send"] = SendCommand(this)
+        commands["version"] = VersionCommand(this)
     }
 
     private fun registerListeners()
@@ -134,7 +134,7 @@ class NovusBroadcast : JavaPlugin()
                     val array = jsonObject["messages"].asJsonArray
                     val prefix = ChatColor.translateAlternateColorCodes('&', jsonObject["prefix"].asString)
                     val suffix = ChatColor.translateAlternateColorCodes('&', jsonObject["suffix"].asString)
-                    val messages = array.map { ChatColor.translateAlternateColorCodes('&', it.asString) }
+                    val messages = array.map { e -> ChatColor.translateAlternateColorCodes('&', e.asString) }
 
                     messageLists[name] = MessageList(this, name, enabled, interval, randomize, prefix, suffix, messages)
                 }
