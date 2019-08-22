@@ -38,14 +38,15 @@ class InfoCommand(private val plugin: NovusBroadcast) : ExecutableCommand
         }
 
         val sb = StringBuilder()
-        sb.append("" + ChatColor.GRAY + ChatColor.STRIKETHROUGH + "\n ---------------------------------------------------- \n")
-        sb.append("" + ChatColor.GRAY + "Name: " + ChatColor.WHITE + messageList.name + "\n")
-        sb.append("" + ChatColor.GRAY + "Interval: " + ChatColor.WHITE + "${messageList.interval} seconds\n")
-        sb.append("" + ChatColor.GRAY + "Randomized: " + ChatColor.WHITE + messageList.randomize + "\n")
-        sb.append("" + ChatColor.GRAY + "Has prefix: " + ChatColor.WHITE + hasPrefix + "\n")
-        sb.append("" + ChatColor.GRAY + "Has suffix: " + ChatColor.WHITE + hasSuffix + "\n")
-        sb.append("" + ChatColor.GRAY + "Message count: " + ChatColor.WHITE + messageList.messages.size)
-        sb.append("" + ChatColor.GRAY + ChatColor.STRIKETHROUGH + "\n ---------------------------------------------------- \n")
+        sb.append("${ChatColor.GRAY}${ChatColor.STRIKETHROUGH}\n ---------------------------------------------------- \n")
+        sb.append("${ChatColor.GRAY}Name: ${ChatColor.WHITE}${messageList.name}\n")
+        sb.append("${ChatColor.GRAY}Enabled: ${ChatColor.WHITE}${messageList.enabled}\n")
+        sb.append("${ChatColor.GRAY}Interval: ${ChatColor.WHITE}${messageList.interval} seconds\n")
+        sb.append("${ChatColor.GRAY}Randomized: ${ChatColor.WHITE}${messageList.randomize}\n")
+        sb.append("${ChatColor.GRAY}Has prefix: ${ChatColor.WHITE}$hasPrefix\n")
+        sb.append("${ChatColor.GRAY}Has suffix: ${ChatColor.WHITE}$hasSuffix\n")
+        sb.append("${ChatColor.GRAY}Message count: ${ChatColor.WHITE}${messageList.messages.size}")
+        sb.append("${ChatColor.GRAY}${ChatColor.STRIKETHROUGH}\n ---------------------------------------------------- \n")
 
         sender?.sendMessage(sb.toString())
     }
