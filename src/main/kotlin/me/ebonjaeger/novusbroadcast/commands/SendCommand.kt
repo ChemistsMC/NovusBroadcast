@@ -1,50 +1,38 @@
 package me.ebonjaeger.novusbroadcast.commands
 
+import co.aikar.commands.BaseCommand
+import co.aikar.commands.annotation.CommandAlias
+import co.aikar.commands.annotation.CommandCompletion
+import co.aikar.commands.annotation.CommandPermission
+import co.aikar.commands.annotation.Description
+import co.aikar.commands.annotation.Subcommand
 import me.ebonjaeger.novusbroadcast.NovusBroadcast
-import me.ebonjaeger.novusbroadcast.permissions.AdminPermission
-import me.ebonjaeger.novusbroadcast.permissions.PermissionNode
 import org.bukkit.ChatColor
 import org.bukkit.command.CommandSender
 
-class SendCommand(private val plugin: NovusBroadcast) : ExecutableCommand
+@CommandAlias("novusbroadcast|nb")
+class SendCommand(private val plugin: NovusBroadcast) : BaseCommand()
 {
 
-    override fun executeCommand(sender: CommandSender?, args: List<String>)
+    @Subcommand("send")
+    @CommandCompletion("@messageLists")
+    @CommandPermission("novusbroadcast.send")
+    @Description("Immediately send the message at the given index to all players.")
+    fun onSend(sender: CommandSender, listName: String, index: Int)
     {
-        if (args.size != 3)
-        {
-            sender?.sendMessage("" + ChatColor.RED + "» " + ChatColor.GRAY + "Invalid arguments! Usage is: "
-                    + ChatColor.WHITE + "/nb info <messageList>")
-            return
-        }
-
-        val messageList = plugin.messageLists[args[1]]
+        val messageList = plugin.messageLists[listName]
         if (messageList == null)
         {
-            sender?.sendMessage("" + ChatColor.RED + "» " + ChatColor.GRAY + "No list with name '${args[1]}' found!")
+            sender.sendMessage("${ChatColor.RED}» ${ChatColor.GRAY}No list with name '$listName' found!")
             return
         }
 
-        val index = args[2].toIntOrNull()
-        if (index == null)
+        if (messageList.hasMessageAtIndex(index))
         {
-            sender?.sendMessage("" + ChatColor.RED + "» " + ChatColor.GRAY + "Invalid index argument '${args[2]}'!")
-            return
-        }
-
-        try
-        {
-            val message = messageList.messages[index]
             messageList.sendMessage(index)
-        }
-        catch (ex: IndexOutOfBoundsException)
+        } else
         {
-            sender?.sendMessage("" + ChatColor.RED + "» " + ChatColor.GRAY + "No message at index '$index'!")
+            sender.sendMessage("${ChatColor.RED}» ${ChatColor.GRAY}No message at index '$index'!")
         }
-    }
-
-    override fun getRequiredPermission(): PermissionNode?
-    {
-        return AdminPermission.SEND
     }
 }

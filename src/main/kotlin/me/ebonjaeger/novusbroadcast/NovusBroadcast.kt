@@ -1,14 +1,11 @@
 package me.ebonjaeger.novusbroadcast
 
+import co.aikar.commands.PaperCommandManager
 import com.google.gson.JsonParser
 import com.google.gson.stream.JsonReader
 import me.ebonjaeger.novusbroadcast.commands.*
-import me.ebonjaeger.novusbroadcast.listeners.PluginListener
-import me.ebonjaeger.novusbroadcast.permissions.PermissionManager
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
-import org.bukkit.command.Command
-import org.bukkit.command.CommandSender
 import org.bukkit.plugin.java.JavaPlugin
 import java.io.File
 import java.io.FileReader
@@ -18,9 +15,7 @@ class NovusBroadcast : JavaPlugin()
 
     val messageLists = HashMap<String, MessageList>()
 
-    private val commands = HashMap<String, ExecutableCommand>()
     private val messagesFile = File(dataFolder, "messages.json")
-    private val permissionManager = PermissionManager(Bukkit.getPluginManager())
 
     override fun onEnable()
     {
@@ -43,9 +38,7 @@ class NovusBroadcast : JavaPlugin()
             saveResource("messages.json", false)
         }
 
-        permissionManager.checkForPlugins()
         registerCommands()
-        registerListeners()
         loadMessageLists(messagesFile)
 
         ConsoleLogger.debug("NovusBroadcast is enabled and debug-mode is active!")
@@ -56,53 +49,17 @@ class NovusBroadcast : JavaPlugin()
         server.scheduler.cancelTasks(this)
     }
 
-    override fun onCommand(sender: CommandSender?, command: Command?, label: String?, args: Array<out String>?): Boolean
-    {
-        if (command?.name.equals("nb", true))
-        {
-            if (args?.size == 0)
-            {
-                commands["nb"]?.executeCommand(sender, emptyList())
-                return true
-            }
-
-            val mappedCommand = commands[args?.get(0)?.decapitalize()]
-            if (mappedCommand != null)
-            {
-                if (!permissionManager.hasPermission(sender, mappedCommand.getRequiredPermission()))
-                {
-                    sender?.sendMessage(ChatColor.DARK_RED.toString() + "» " + ChatColor.GRAY + "You do not have permission to do that.")
-                    return true
-                }
-
-                // Execute the command
-                mappedCommand.executeCommand(sender, args?.asList() ?: emptyList())
-                return true
-            }
-            else
-            {
-                commands["nb"]?.executeCommand(sender, emptyList())
-                return true
-            }
-        }
-
-        return false
-    }
-
     private fun registerCommands()
     {
-        commands["nb"] = NovusCommand()
-        commands["help"] = HelpCommand()
-        commands["info"] = InfoCommand(this)
-        commands["list"] = ListCommand(this)
-        commands["reload"] = ReloadCommand(this)
-        commands["send"] = SendCommand(this)
-        commands["version"] = VersionCommand(this)
-    }
+        val commandManager = PaperCommandManager(this)
+        commandManager.commandCompletions.registerAsyncCompletion("messageLists") { messageLists.keys }
+        commandManager.enableUnstableAPI("help")
 
-    private fun registerListeners()
-    {
-        server.pluginManager.registerEvents(PluginListener(permissionManager), this)
+        commandManager.registerCommand(InfoCommand(this))
+        commandManager.registerCommand(ListCommand(this))
+        commandManager.registerCommand(ReloadCommand(this))
+        commandManager.registerCommand(SendCommand(this))
+        commandManager.registerCommand(HelpCommand(this))
     }
 
     fun reload()

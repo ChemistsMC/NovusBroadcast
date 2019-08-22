@@ -1,27 +1,29 @@
 package me.ebonjaeger.novusbroadcast.commands
 
+import co.aikar.commands.BaseCommand
+import co.aikar.commands.annotation.CommandAlias
+import co.aikar.commands.annotation.CommandCompletion
+import co.aikar.commands.annotation.CommandPermission
+import co.aikar.commands.annotation.Description
+import co.aikar.commands.annotation.Subcommand
 import me.ebonjaeger.novusbroadcast.NovusBroadcast
-import me.ebonjaeger.novusbroadcast.permissions.AdminPermission
-import me.ebonjaeger.novusbroadcast.permissions.PermissionNode
 import org.bukkit.ChatColor
 import org.bukkit.command.CommandSender
 
-class InfoCommand(private val plugin: NovusBroadcast) : ExecutableCommand
+@CommandAlias("novusbroadcast|nb")
+class InfoCommand(private val plugin: NovusBroadcast) : BaseCommand()
 {
 
-    override fun executeCommand(sender: CommandSender?, args: List<String>)
+    @Subcommand("info")
+    @CommandCompletion("@messageLists")
+    @CommandPermission("novusbroadcast.info")
+    @Description("Shows information about a message list.")
+    fun onMessageListInfo(sender: CommandSender, listName: String)
     {
-        if (args.size != 2)
-        {
-            sender?.sendMessage("" + ChatColor.RED + "» " + ChatColor.GRAY + "Invalid arguments! Usage is: "
-                    + ChatColor.WHITE + "/nb info <messageList>")
-            return
-        }
-
-        val messageList = plugin.messageLists[args[1]]
+        val messageList = plugin.messageLists[listName]
         if (messageList == null)
         {
-            sender?.sendMessage("" + ChatColor.RED + "» " + ChatColor.GRAY + "No list with name '${args[1]}' found!")
+            sender.sendMessage("${ChatColor.RED}» ${ChatColor.GRAY}No list with name '$listName' found!")
             return
         }
 
@@ -48,11 +50,6 @@ class InfoCommand(private val plugin: NovusBroadcast) : ExecutableCommand
         sb.append("${ChatColor.GRAY}Message count: ${ChatColor.WHITE}${messageList.messages.size}")
         sb.append("${ChatColor.GRAY}${ChatColor.STRIKETHROUGH}\n ---------------------------------------------------- \n")
 
-        sender?.sendMessage(sb.toString())
-    }
-
-    override fun getRequiredPermission(): PermissionNode?
-    {
-        return AdminPermission.INFO
+        sender.sendMessage(sb.toString())
     }
 }

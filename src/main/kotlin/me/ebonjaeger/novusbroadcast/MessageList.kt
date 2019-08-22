@@ -12,6 +12,7 @@ import java.util.*
  *
  * @param plugin The [NovusBroadcast] plugin instance.
  * @param name The name of this list.
+ * @param enabled If messages from this list should be sent.
  * @param interval The interval between messages in seconds.
  * @param randomize Whether the messages should be broadcast at random or in order.
  * @param prefix The prefix to be sent with each message.
@@ -53,6 +54,17 @@ data class MessageList(private val plugin: NovusBroadcast,
     }
 
     /**
+     * Check if a message at a given index exists.
+     *
+     * @param index The index to check for.
+     * @return True if an element exists.
+     */
+    fun hasMessageAtIndex(index: Int): Boolean
+    {
+        return if (messages.isEmpty()) false else !messages.getOrNull(index).isNullOrEmpty()
+    }
+
+    /**
      * Sends a message to all online players.
      *
      * @param index The index in the list of the message to send.
@@ -66,11 +78,8 @@ data class MessageList(private val plugin: NovusBroadcast,
             Bukkit.getConsoleSender().sendMessage(suffix)
         }
 
-        for (player in Bukkit.getServer().onlinePlayers)
-        {
-            player.sendMessage(prefix)
-            player.sendMessage(messages[index])
-            player.sendMessage(suffix)
-        }
+        Bukkit.broadcastMessage(prefix)
+        Bukkit.broadcastMessage(messages[index])
+        Bukkit.broadcastMessage(suffix)
     }
 }

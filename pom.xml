@@ -64,6 +64,13 @@
             <version>${bukkit.version}</version>
             <scope>provided</scope>
         </dependency>
+
+        <!-- Commands -->
+        <dependency>
+            <groupId>co.aikar</groupId>
+            <artifactId>acf-paper</artifactId>
+            <version>0.5.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -90,6 +97,11 @@
                 <artifactId>kotlin-maven-plugin</artifactId>
                 <groupId>org.jetbrains.kotlin</groupId>
                 <version>${kotlin.version}</version>
+
+                <configuration>
+                    <jvmTarget>1.8</jvmTarget>
+                    <javaParameters>true</javaParameters>
+                </configuration>
 
                 <executions>
                     <execution>
@@ -132,13 +144,17 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.0.0</version>
+                <version>3.1.1</version>
                 <configuration>
                     <minimizeJar>true</minimizeJar>
                     <relocations>
                         <relocation>
                             <pattern>kotlin</pattern>
-                            <shadedPattern>me.ebonjaeger.libs.kotlin</shadedPattern>
+                            <shadedPattern>me.ebonjaeger.novusbroadcast.libs.kotlin</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>co.aikar.commands</pattern>
+                            <shadedPattern>me.ebonjaeger.novusbroadcast.acf</shadedPattern> <!-- Replace this -->
                         </relocation>
                     </relocations>
                 </configuration>
