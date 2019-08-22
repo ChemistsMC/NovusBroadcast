@@ -20,6 +20,7 @@ import java.util.*
  */
 data class MessageList(private val plugin: NovusBroadcast,
                        val name: String,
+                       val enabled: Boolean,
                        val interval: Long,
                        val randomize: Boolean,
                        val prefix: String,
@@ -32,25 +33,23 @@ data class MessageList(private val plugin: NovusBroadcast,
 
     init
     {
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, {
-            if (randomize)
-            {
-                val random = Random()
-                val index = random.nextInt(messages.size)
+        if (enabled) {
+            Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, {
+                if (randomize) {
+                    val random = Random()
+                    val index = random.nextInt(messages.size)
 
-                sendMessage(index)
-            }
-            else
-            {
-                sendMessage(currentIndex)
-                currentIndex++
+                    sendMessage(index)
+                } else {
+                    sendMessage(currentIndex)
+                    currentIndex++
 
-                if (currentIndex == messages.size)
-                {
-                    currentIndex = 0
+                    if (currentIndex == messages.size) {
+                        currentIndex = 0
+                    }
                 }
-            }
-        }, ticks, ticks)
+            }, ticks, ticks)
+        }
     }
 
     /**

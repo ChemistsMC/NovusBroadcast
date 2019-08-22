@@ -128,6 +128,7 @@ class NovusBroadcast : JavaPlugin()
                 {
                     val name = list.key
                     val jsonObject = root[name].asJsonObject
+                    val enabled = jsonObject["enabled"].asBoolean
                     val interval = jsonObject["interval"].asLong
                     val randomize = jsonObject["randomize"].asBoolean
                     val array = jsonObject["messages"].asJsonArray
@@ -135,7 +136,7 @@ class NovusBroadcast : JavaPlugin()
                     val suffix = ChatColor.translateAlternateColorCodes('&', jsonObject["suffix"].asString)
                     val messages = array.map { ChatColor.translateAlternateColorCodes('&', it.asString) }
 
-                    messageLists.put(name, MessageList(this, name, interval, randomize, prefix, suffix, messages))
+                    messageLists[name] = MessageList(this, name, enabled, interval, randomize, prefix, suffix, messages)
                 }
             }
         }

@@ -1,6 +1,7 @@
 {
   "root": {
     "default": {
+      "enabled": true,
       "interval": 300,
       "randomize": false,
       "prefix": "\n &7&m ---------------&r &9&lNovus Broadcast&r &7&m--------------- &r\n",
